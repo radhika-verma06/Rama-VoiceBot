@@ -24,16 +24,23 @@ def serve_static(path):
 
 @app.route('/api/chat', methods=['POST'])
 def chat():
+    print("--- Incoming Chat Request ---")
     data = request.json
     user_text = data.get('text')
     context = data.get('context', [])
     lang_name = data.get('langName', 'English')
     
+    print(f"User Text: {user_text}")
+    print(f"Language: {lang_name}")
+    
     # Check if API key is configured
-    if not os.getenv("GROQ_API_KEY"):
+    key = os.getenv("GROQ_API_KEY")
+    if not key:
+        print("ERROR: GROQ_API_KEY NOT FOUND IN .ENV")
         return jsonify({"error": "GROQ_API_KEY not configured on server"}), 500
 
     try:
+        print(f"Calling Groq API (Key starts with: {key[:5]}...)")
         # System prompt with TRANSLATION instructions
         system_prompt = f"""You are Rama, a friendly Australia regional assistant for migrants and tourists. 
         You must respond in {lang_name} language ONLY.
