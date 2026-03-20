@@ -1,6 +1,6 @@
 # Rama — Regional Voice Assistant (Australia) 🇦🇺🎙️
 
-Rama is a high-performance, multilingual voice assistant designed specifically for migrants and tourists in Australia. It provides real-time information on transport, emergency services, local attractions, and more, using the Web Speech API and Anthropic's Claude AI.
+Rama is a high-performance, multilingual voice assistant designed specifically for migrants and tourists in Australia. It provides real-time information on transport, emergency services, local attractions, and more, using the Web Speech API and Groq's high-speed Llama 3 AI.
 
 ![Rama UI Mockup](https://via.placeholder.com/800x450.png?text=Rama+Voice+Assistant+UI+Mockup)
 
@@ -8,23 +8,23 @@ Rama is a high-performance, multilingual voice assistant designed specifically f
 
 - **14 Supported Languages**: Including English, Mandarin, Arabic, Hindi, Spanish, and more.
 - **Voice-First Experience**: Fully interactive with wake-word detection ("Hi Rama") and text-to-speech feedback.
-- **AI-Powered Intelligence**: Integrated with Claude AI for nuanced, context-aware conversations.
+- **Always-On Intelligence**: Powered by Groq/Llama 3 for lightning-fast, context-aware conversations.
 - **Real-time Translation**: Automatically detects input language and translates it to your selected target language.
-- **Professional Architecture**: Split into modular components with a secure Flask backend proxy.
+- **Secured Architecture**: API keys are handled exclusively on the backend for maximum security.
 
 ## 🛠️ Technology Stack
 
 - **Frontend**: Vanilla HTML5, CSS3 (Glassmorphism), ES6 modules.
 - **APIs**: Web Speech API (Recognition/Synthesis).
 - **Backend**: Python 3.x, Flask.
-- **AI**: Anthropic Claude 3 Sonnet.
+- **AI**: Groq (Llama 3.3 70B).
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
 - Python 3.8+
-- An Anthropic API Key ([Get one here](https://console.anthropic.com))
+- A Groq API Key ([Get one here](https://console.groq.com))
 
 ### Installation
 
@@ -48,7 +48,7 @@ Rama is a high-performance, multilingual voice assistant designed specifically f
 4. **Configure Environment Variables**:
    Create a `.env` file in the root directory:
    ```env
-   ANTHROPIC_API_KEY=your_sk_ant_api_key_here
+   GROQ_API_KEY=your_groq_api_key_here
    ```
 
 5. **Run the application**:
@@ -63,7 +63,7 @@ Vercel is the easiest way to deploy this project as a serverless application.
 
 1.  **Install Vercel CLI**: `npm i -g vercel`
 2.  **Deploy**: Run `vercel` in the root directory.
-3.  **Add Environment Variable**: In the Vercel dashboard, go to Settings > Environment Variables and add `ANTHROPIC_API_KEY`.
+3.  **Add Environment Variable**: In the Vercel dashboard, go to Settings > Environment Variables and add `GROQ_API_KEY`.
 4.  **Production**: Run `vercel --prod` for the final deployment.
 
 ### Deploying to Render/Railway

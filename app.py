@@ -1,7 +1,8 @@
 import os
+import re
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
-from anthropic import Anthropic
+from groq import Groq
 from dotenv import load_dotenv
 
 # Load environment variables
@@ -10,8 +11,8 @@ load_dotenv()
 app = Flask(__name__, static_folder='src')
 CORS(app)
 
-# Anthropic Client
-client = Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
+# Groq Client
+client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 @app.route('/')
 def index():
@@ -29,8 +30,8 @@ def chat():
     lang_name = data.get('langName', 'English')
     
     # Check if API key is configured
-    if not os.getenv("ANTHROPIC_API_KEY"):
-        return jsonify({"error": "API Key not configured on server"}), 500
+    if not os.getenv("GROQ_API_KEY"):
+        return jsonify({"error": "GROQ_API_KEY not configured on server"}), 500
 
     try:
         # System prompt with TRANSLATION instructions
@@ -45,23 +46,32 @@ def chat():
         [TRANSLATED: translation of user message into {lang_name}]
         2. Then provide your helpful response in {lang_name}.
 
-        If the user already writes in {lang_name}, skip the detection block and just respond normally."""
+        If the user already writes in {lang_name}, skip the detection block and just respond normally.
+        
+        Always prioritize local Australian knowledge (000 emergency, Opal/Myki cards, etc.)."""
 
-        response = client.messages.create(
-            model="claude-3-sonnet-20240229",
+        # Prepare messages for Groq (Llama 3 format)
+        messages = [{"role": "system", "content": system_prompt}]
+        for msg in context:
+            messages.append(msg)
+        messages.append({"role": "user", "content": user_text})
+
+        completion = client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=messages,
+            temperature=0.7,
             max_tokens=400,
-            system=system_prompt,
-            messages=context + [{"role": "user", "content": user_text}]
+            top_p=1,
+            stream=False,
+            stop=None,
         )
         
-        raw_text = response.content[0].text
+        raw_text = completion.choices[0].message.content
         
         # Parse translation blocks
         detected_lang = None
         translation = None
-        reply = raw_text
         
-        import re
         detected_match = re.search(r'\[DETECTED:\s*([^\]]+)\]', raw_text, re.IGNORECASE)
         translated_match = re.search(r'\[TRANSLATED:\s*([^\]]+)\]', raw_text, re.IGNORECASE)
         
@@ -70,7 +80,7 @@ def chat():
         if translated_match:
             translation = translated_match.group(1).strip()
             
-        # Clean reply
+        # Clean reply (remove metadata blocks)
         reply = re.sub(r'\[DETECTED:[^\]]+\]', '', raw_text, flags=re.IGNORECASE)
         reply = re.sub(r'\[TRANSLATED:[^\]]+\]', '', reply, flags=re.IGNORECASE).strip()
         

@@ -12,7 +12,6 @@ let awake = false;
 let turn = 0;
 let userName = null;
 let conversationHistory = [];
-let apiKey = ''; // User can still provide their own key in the UI
 
 const speech = new SpeechManager();
 
@@ -44,10 +43,6 @@ function init() {
 
   // Init Waveform
   initWaveform('wave');
-  
-  // Connect API elements
-  $('apiSaveBtn').onclick = saveApiKey;
-  $('apiKey').onkeydown = e => { if (e.key === 'Enter') saveApiKey(); };
   
   // Connect Control buttons
   $('btnMic').onclick = () => speech.enableMic().then(ok => {
@@ -125,7 +120,7 @@ async function handleWake() {
   const greet = langConfig.wake(userName);
   
   conversationHistory.push({ role: 'assistant', content: greet });
-  const modeLabel = apiKey ? 'Claude AI' : 'Built-in';
+  const modeLabel = 'Groq AI';
   addChatMessage(greet, 'b', 'Rama · ' + getTimeString() + ' · ' + modeLabel, curLang.name);
   
   speech.speak(greet, curLang.code, () => {
@@ -152,9 +147,9 @@ async function handleInput(text) {
   
   let reply, detectedLang = null, translation = null;
   
-  // Use AI if API key or proxy is available
+  // Use AI via backend proxy
   showTypingIndicator();
-  const aiResult = await getAIReply(text, conversationHistory, curLang.name, apiKey);
+  const aiResult = await getAIReply(text, conversationHistory, curLang.name);
   hideTypingIndicator();
 
   if (aiResult) {
@@ -176,7 +171,7 @@ async function handleInput(text) {
     reply = langConfig.think(text);
   }
   
-  const modeLabel = (aiResult && !apiKey) ? 'Claude AI (Proxy)' : (apiKey ? 'Claude AI' : 'Built-in');
+  const modeLabel = 'Groq AI';
   addChatMessage(reply, 'b', 'Rama · ' + getTimeString() + ' · ' + curLang.name + ' · ' + modeLabel, curLang.name);
   
   speech.speak(reply, curLang.code, () => {
@@ -206,23 +201,6 @@ function createTranslationPill(detected, trans, target) {
   pill.className = 'trans-pill';
   pill.innerHTML = `<div class="trans-label">🌐 ${detected} → ${target}</div><div class="trans-text">${trans}</div>`;
   return pill;
-}
-
-function saveApiKey() {
-  const val = $('apiKey').value.trim();
-  if (!val) { updateApiBadge('NO KEY', false); return; }
-  if (!val.startsWith('sk-ant-')) { updateApiBadge('INVALID KEY', true); return; }
-  apiKey = val;
-  updateApiBadge('CLAUDE READY', false);
-  $('cModel').textContent = 'CLAUDE AI';
-  debug('Claude AI connected!');
-  $('apiKey').value = '';
-}
-
-function updateApiBadge(text, isErr) {
-  const b = $('apiBadge');
-  b.textContent = text;
-  b.className = 'api-badge' + (isErr ? ' err' : '');
 }
 
 function sendText() {
