@@ -34,7 +34,7 @@ export async function getAIReply(text, context, langName, retries = 2) {
     } catch (e) {
       console.warn(`API attempt ${attempt + 1} failed:`, e);
       if (attempt === retries) {
-        debug(`API Error: ${e.message}`);
+        debug(`API Error: ${e.message}. Ensuring python app.py is running.`);
         return null;
       }
       await new Promise(r => setTimeout(r, 500 * (attempt + 1)));

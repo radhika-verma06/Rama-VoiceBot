@@ -171,7 +171,7 @@ async function handleInput(text) {
     reply = langConfig.think(text);
   }
   
-  const modeLabel = 'Groq AI';
+  const modeLabel = aiResult ? 'Groq AI' : 'Rule-based (API Error)';
   addChatMessage(reply, 'b', 'Rama · ' + getTimeString() + ' · ' + curLang.name + ' · ' + modeLabel, curLang.name);
   
   speech.speak(reply, curLang.code, () => {
