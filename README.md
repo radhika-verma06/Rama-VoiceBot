@@ -10,7 +10,16 @@ Rama is a high-performance, multilingual voice assistant designed specifically f
 - **Voice-First Experience**: Fully interactive with wake-word detection ("Hi Rama") and text-to-speech feedback.
 - **Always-On Intelligence**: Powered by Groq/Llama 3 for lightning-fast, context-aware conversations.
 - **Real-time Translation**: Automatically detects input language and translates it to your selected target language.
-- **Secured Architecture**: API keys are handled exclusively on the backend for maximum security.
+- **Secured Backend Proxy**: API keys are handled exclusively on the server side, preventing exposure in the client-side code.
+- **Zero-Config for Users**: Clients only need a browser; no API keys or local Python setup required on their end.
+
+## 🏛️ Project Architecture
+
+This project follows a modern **Client-Server Architecture**:
+
+1.  **Frontend (Vanilla JS Modules)**: Modular ES6 code for Speech Recognition, UI management, and API orchestration.
+2.  **Backend (Python/Flask)**: Acts as a secure gateway to the Groq API, managing request flow and secrets.
+3.  **API Layer (Groq)**: High-speed Llama 3.3 70B model for state-of-the-art regional intelligence.
 
 ## 🛠️ Technology Stack
 
