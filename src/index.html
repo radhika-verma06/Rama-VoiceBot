@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Rama — Voice Assistant</title>
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800;900&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="grid"></div>
+  
+  <div class="app">
+    <header class="hdr">
+      <div class="brand">
+        <div class="brand-r">R</div>
+        <div>
+          <div class="brand-name">Rama</div>
+          <div class="brand-sub">REGIONAL VOICE · AUSTRALIA</div>
+        </div>
+      </div>
+      <div class="chips">
+        <div class="chip" id="cMic">MIC: OFF</div>
+        <div class="chip lc" id="cLang">EN</div>
+        <div class="chip" id="cTurn">TURN: 0</div>
+        <div class="chip ai" id="cModel">RULE-BASED</div>
+      </div>
+    </header>
+
+    <div class="api-panel" id="apiPanel">
+      <div class="api-hd">
+        <div class="api-title">🤖 Claude AI Integration</div>
+        <div class="api-badge" id="apiBadge">NO KEY</div>
+      </div>
+      <div class="api-row">
+        <input class="api-input" id="apiKey" type="password" placeholder="Paste your Anthropic API key — sk-ant-api03-…" autocomplete="off" spellcheck="false"/>
+        <button class="api-save" id="apiSaveBtn">Connect</button>
+      </div>
+      <div class="api-note">
+        Without a key Rama uses <strong style="color:rgba(237,240,255,.6)">built-in responses</strong>. Add a key for <strong style="color:var(--teal)">Claude AI + Translation</strong>.<br>
+        Get a key at <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a>
+      </div>
+    </div>
+
+    <div class="layout">
+      <div class="card">
+        <div class="orb-zone">
+          <div class="orb-wrap">
+            <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+            <div class="orb" id="orb">
+              <div class="orb-txt">
+                <div class="orb-name">Rama</div>
+                <div class="orb-hint">TAP TO TALK</div>
+              </div>
+            </div>
+          </div>
+          <div class="st-main" id="stM">Ready</div>
+          <div class="st-sub" id="stS">Enable mic, select language, then say <strong style="color:var(--teal)">"Hi Rama"</strong></div>
+        </div>
+
+        <div class="wave-zone">
+          <div class="wave-top">
+            <div class="wlbl">VOICE ACTIVITY</div>
+            <div class="wmode" id="wMode">IDLE</div>
+          </div>
+          <div class="wave" id="wave"></div>
+        </div>
+
+        <div class="ctrl">
+          <button class="btn go full" id="btnMic">Enable Microphone</button>
+          <div class="btn-row">
+            <button class="btn go" id="btnL" disabled>▶ Listen</button>
+            <button class="btn stp" id="btnS" disabled>■ Stop</button>
+            <button class="btn" id="btnC">↺ Clear</button>
+          </div>
+          <button class="btn exp full" id="btnExport">⬇ Export Chat</button>
+        </div>
+
+        <div class="lang-zone">
+          <div class="lang-hd">
+            <span>SELECT LANGUAGE</span>
+            <span id="lActive" style="color:var(--teal)">English</span>
+          </div>
+          <div class="lang-grid" id="langGrid"></div>
+        </div>
+
+        <div class="live-zone">
+          <span class="live-lbl">LIVE</span>
+          <span id="liveTr">—</span>
+        </div>
+
+        <div class="dbg-zone">
+          <div class="dbg-lbl">STATUS</div>
+          <div class="dbg-val" id="dbg">Use Chrome. Click Enable Microphone to start.</div>
+        </div>
+      </div>
+
+      <div class="card chat-card">
+        <div class="chat-hd">
+          <div class="chat-hd-t">Conversation</div>
+          <div class="chip" id="cSess">0 msgs</div>
+        </div>
+        <div class="chat-log" id="log">
+          <div class="empty" id="empt">
+            <div class="empty-ico">🎙</div>
+            <div class="empty-t">Say "Hi Rama" to begin</div>
+            <div class="empty-s">14 languages · Translation enabled</div>
+          </div>
+        </div>
+        <div class="chat-ft">
+          <input class="ti" id="ti" placeholder="Or type here and press Enter…"/>
+          <button class="sb" id="btnSend">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script type="module" src="assets/js/app.js"></script>
+</body>
+</html>
