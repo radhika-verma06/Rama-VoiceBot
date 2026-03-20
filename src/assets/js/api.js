@@ -7,8 +7,8 @@ import { debug } from './ui.js';
 export async function getAIReply(text, context, langName, retries = 2) {
   // If we're running on a different port (like Live Server), point to the Flask port
   const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-  const endpoint = (isLocal && window.location.port !== '5000') 
-    ? 'http://localhost:5000/api/chat' 
+  const endpoint = (isLocal && window.location.port !== '5001') 
+    ? 'http://localhost:5001/api/chat' 
     : '/api/chat';
   
   const headers = { 'Content-Type': 'application/json' };

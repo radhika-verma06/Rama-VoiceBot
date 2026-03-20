@@ -55,7 +55,7 @@ Rama is a high-performance, multilingual voice assistant designed specifically f
    ```bash
    python app.py
    ```
-   Open `http://localhost:5000` in **Google Chrome** (required for Web Speech API).
+   Open `http://localhost:5001` in **Google Chrome** (required for Web Speech API).
 
 ### Deploying to Vercel (Recommended)
 
