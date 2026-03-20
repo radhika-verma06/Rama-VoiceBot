@@ -40,7 +40,7 @@ def chat():
         return jsonify({"error": "GROQ_API_KEY not configured on server"}), 500
 
     try:
-        print(f"Calling Groq API (Key starts with: {key[:5]}...)")
+        print(f"Calling Groq API (Key starts with: {key[0:5]}...)")
         # System prompt with TRANSLATION instructions
         system_prompt = f"""You are Rama, a friendly Australia regional assistant for migrants and tourists. 
         You must respond in {lang_name} language ONLY.

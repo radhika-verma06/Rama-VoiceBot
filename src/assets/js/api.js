@@ -5,7 +5,11 @@
 import { debug } from './ui.js';
 
 export async function getAIReply(text, context, langName, retries = 2) {
-  const endpoint = '/api/chat';
+  // If we're running on a different port (like Live Server), point to the Flask port
+  const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  const endpoint = (isLocal && window.location.port !== '5000') 
+    ? 'http://localhost:5000/api/chat' 
+    : '/api/chat';
   
   const headers = { 'Content-Type': 'application/json' };
   const body = JSON.stringify({ text, context, langName });
