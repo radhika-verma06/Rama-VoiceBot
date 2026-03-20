@@ -4,7 +4,7 @@ Rama is a high-performance, multilingual voice assistant designed specifically f
 
 ## 🚀 Live Demo
 
-**[👉 CLICK HERE TO TALK TO RAMA](#)** *(Insert your Vercel URL here)*
+**[👉 CLICK HERE TO TALK TO RAMA](https://rama-voice-bot.vercel.app)**
 
 ### 🌟 Why Rama?
 - **Zero-Install**: Works directly in your browser (Google Chrome).
