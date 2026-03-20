@@ -2,103 +2,81 @@
 
 Rama is a high-performance, multilingual voice assistant designed specifically for migrants and tourists in Australia. It provides real-time information on transport, emergency services, local attractions, and more, using the Web Speech API and Groq's high-speed Llama 3 AI.
 
-![Rama UI Mockup](https://via.placeholder.com/800x450.png?text=Rama+Voice+Assistant+UI+Mockup)
+## 🚀 Live Demo
 
-## 🌟 Features
+**[👉 CLICK HERE TO TALK TO RAMA](#)** *(Insert your Vercel URL here)*
 
+### 🌟 Why Rama?
+- **Zero-Install**: Works directly in your browser (Google Chrome).
+- **No API Key Needed**: AI intelligence is handled securely on our servers.
 - **14 Supported Languages**: Including English, Mandarin, Arabic, Hindi, Spanish, and more.
-- **Voice-First Experience**: Fully interactive with wake-word detection ("Hi Rama") and text-to-speech feedback.
-- **Always-On Intelligence**: Powered by Groq/Llama 3 for lightning-fast, context-aware conversations.
-- **Real-time Translation**: Automatically detects input language and translates it to your selected target language.
-- **Secured Backend Proxy**: API keys are handled exclusively on the server side, preventing exposure in the client-side code.
-- **Zero-Config for Users**: Clients only need a browser; no API keys or local Python setup required on their end.
+- **Real-time Translation**: Automatically detects and translates your speech.
 
 ## 🏛️ Project Architecture
 
 This project follows a modern **Client-Server Architecture**:
 
-1.  **Frontend (Vanilla JS Modules)**: Modular ES6 code for Speech Recognition, UI management, and API orchestration.
-2.  **Backend (Python/Flask)**: Acts as a secure gateway to the Groq API, managing request flow and secrets.
-3.  **API Layer (Groq)**: High-speed Llama 3.3 70B model for state-of-the-art regional intelligence.
+1.  **Frontend (Vanilla JS Modules)**: High-performance, modular ES6 code for Speech and UI logic.
+2.  **Backend (Python/Flask)**: A secure gateway to the Groq API, protecting credentials and managing AI context.
+3.  **API Layer (Groq)**: Uses the cutting-edge **Llama 3.3 70B** model for lightning-fast regional intelligence.
 
-## 🛠️ Technology Stack
+---
 
-- **Frontend**: Vanilla HTML5, CSS3 (Glassmorphism), ES6 modules.
-- **APIs**: Web Speech API (Recognition/Synthesis).
-- **Backend**: Python 3.x, Flask.
-- **AI**: Groq (Llama 3.3 70B).
+## 🛠️ Developer Setup (Local Development)
 
-## 🚀 Getting Started
+The following steps are only required if you wish to run Rama on your local machine or contribute to the project.
 
 ### Prerequisites
-
 - Python 3.8+
 - A Groq API Key ([Get one here](https://console.groq.com))
 
-### Installation
+### Local Installation
+1.  **Clone the repository**:
+    ```bash
+    git clone https://github.com/radhika-verma06/Rama-VoiceBot.git
+    cd Rama-VoiceBot
+    ```
+2.  **Install dependencies**:
+    ```bash
+    pip install -r requirements.txt
+    ```
+3.  **Configure Environment Variables**:
+    Create a `.env` file in the root directory:
+    ```env
+    GROQ_API_KEY=your_groq_api_key_here
+    ```
+4.  **Start the Server**:
+    ```bash
+    python app.py
+    ```
+5.  **Access the App**:
+    Open `http://localhost:5001` in **Google Chrome**.
 
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/your-username/rama-voicebot.git
-   cd rama-voicebot
-   ```
+### ☁️ Deployment (Vercel)
+This project is optimized for **Vercel Serverless Functions**. To deploy your own version:
+1. Run `vercel` in the root directory.
+2. Add `GROQ_API_KEY` to your Vercel environment variables.
+3. Run `vercel --prod`.
 
-2. **Set up a virtual environment**:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-
-3. **Install dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Configure Environment Variables**:
-   Create a `.env` file in the root directory:
-   ```env
-   GROQ_API_KEY=your_groq_api_key_here
-   ```
-
-5. **Run the application**:
-   ```bash
-   python app.py
-   ```
-   Open `http://localhost:5001` in **Google Chrome** (required for Web Speech API).
-
-### Deploying to Vercel (Recommended)
-
-Vercel is the easiest way to deploy this project as a serverless application.
-
-1.  **Install Vercel CLI**: `npm i -g vercel`
-2.  **Deploy**: Run `vercel` in the root directory.
-3.  **Add Environment Variable**: In the Vercel dashboard, go to Settings > Environment Variables and add `GROQ_API_KEY`.
-4.  **Production**: Run `vercel --prod` for the final deployment.
-
-### Deploying to Render/Railway
+---
 
 ## 📂 Project Structure
-
 ```text
 .
-├── app.py              # Flask Backend & API Proxy
+├── app.py              # Flask Backend & AI Proxy
 ├── requirements.txt     # Python Dependencies
-├── .env.example        # Configuration Template
+├── vercel.json         # Serverless Configuration
 ├── src/                # Frontend Source
 │   ├── index.html      # Main Entry Point
 │   └── assets/
 │       ├── css/        # Styling modules
 │       └── js/         # Modular Logic (UI, Speech, API)
-├── docs/               # Project Documentation
-├── tests/              # Test suites
 └── legacy/             # Original prototype backup
 ```
 
 ## 🛡️ License
-
-Distributed under the MIT License. See `LICENSE` for more information.
+Distributed under the MIT License.
 
 ## 🤝 Contact
-
-Your Name - [GitHub](https://github.com/your-username)
-Project Link: [https://github.com/your-username/rama-voicebot](https://github.com/your-username/rama-voicebot)
+[Radhika Verma](https://github.com/radhika-verma06)
+Project Link: [https://github.com/radhika-verma06/Rama-VoiceBot](https://github.com/radhika-verma06/Rama-VoiceBot)
