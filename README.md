@@ -1,4 +1,4 @@
-# Rama — Regional Voice Assistant (Australia) 🇦🇺🎙️
+# Rama — Multilingual Regional Voice Assistant for Australia🇦🇺🎙️
 
 Rama is a high-performance, multilingual voice assistant designed specifically for migrants and tourists in Australia. It provides real-time information on transport, emergency services, local attractions, and more, using the Web Speech API and Groq's high-speed Llama 3 AI.
 
