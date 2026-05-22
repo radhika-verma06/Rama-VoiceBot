@@ -224,10 +224,45 @@ async function handleInput(text) {
 }
 
 function isWakeWord(text) {
-  const t = text.toLowerCase().replace(/[^a-z\s]/g, '').trim();
-  return /\b(hi|hey|hello|ok|okay|hai)\s+(rama|ramma|lama|rema|roma)\b/.test(t) || 
-         /^(rama|ramma|rema|lama)\s*$/.test(t) ||
-         (/rama|ramma|rema/.test(t) && t.split(' ').length <= 4);
+  const t = text.toLowerCase().trim();
+  
+  // 1. Check Latin alphabet patterns (covers English and other Roman script languages)
+  const latinClean = t.replace(/[^a-z\s]/g, '').trim();
+  const matchesLatin = /\b(hi|hey|hello|ok|okay|hai|hola|ola|ciao|bonjour|salut|hallo|kumusta|kamusta|xin\s+chao|chao)\s+(rama|ramma|lama|rema|roma)\b/.test(latinClean) || 
+                       /^(rama|ramma|rema|lama)\s*$/.test(latinClean) ||
+                       (/rama|ramma|rema/.test(latinClean) && latinClean.split(' ').length <= 4);
+                       
+  if (matchesLatin) return true;
+  
+  // 2. Localized "Rama" name checks (non-Latin scripts)
+  const nonLatinRama = ['रामा', 'राम', '拉玛', '喇嘛', 'ラマ', '라마', 'راما'];
+  for (const name of nonLatinRama) {
+    if (t.includes(name)) return true;
+  }
+  
+  // 3. Localized greetings in non-English languages to make wake-up intuitive
+  const localizedGreetings = [
+    // Hindi
+    'नमस्ते', 'नमस्कार', 'namaste', 'namaskar',
+    // Mandarin
+    '你好', '您好', '嗨',
+    // Arabic
+    'مرحبا', 'أهلا', 'السلام',
+    // Japanese
+    'こんにちは', 'はじめまして', 'コニチワ',
+    // Korean
+    '안녕', '안녕하세요',
+    // Greek (non-Latin Greek script)
+    'γεια', 'χαίρε',
+    // Vietnamese
+    'xin chào', 'chào'
+  ];
+  
+  for (const greet of localizedGreetings) {
+    if (t.includes(greet)) return true;
+  }
+  
+  return false;
 }
 
 function extractName(text) {
