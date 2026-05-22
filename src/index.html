@@ -33,55 +33,72 @@
     </header>
 
     <div class="layout">
-      <div class="card">
-        <div class="orb-zone">
-          <div class="orb-wrap">
-            <div class="ring"></div><div class="ring"></div><div class="ring"></div>
-            <div class="orb" id="orb">
-              <div class="orb-txt">
-                <div class="orb-name">Rama</div>
-                <div class="orb-hint">TAP TO TALK</div>
+      <div class="sidebar-col">
+        <div class="card">
+          <div class="orb-zone">
+            <div class="orb-wrap">
+              <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+              <div class="orb" id="orb">
+                <div class="orb-txt">
+                  <div class="orb-name">Rama</div>
+                  <div class="orb-hint">TAP TO TALK</div>
+                </div>
               </div>
             </div>
+            <div class="st-main" id="stM">Ready</div>
+            <div class="st-sub" id="stS">Enable mic, select language, then say <strong style="color:var(--teal)">"Hi Rama"</strong></div>
           </div>
-          <div class="st-main" id="stM">Ready</div>
-          <div class="st-sub" id="stS">Enable mic, select language, then say <strong style="color:var(--teal)">"Hi Rama"</strong></div>
-        </div>
 
-        <div class="wave-zone">
-          <div class="wave-top">
-            <div class="wlbl">VOICE ACTIVITY</div>
-            <div class="wmode" id="wMode">IDLE</div>
+          <div class="wave-zone">
+            <div class="wave-top">
+              <div class="wlbl">VOICE ACTIVITY</div>
+              <div class="wmode" id="wMode">IDLE</div>
+            </div>
+            <div class="wave" id="wave"></div>
           </div>
-          <div class="wave" id="wave"></div>
-        </div>
 
-        <div class="ctrl">
-          <button class="btn go full" id="btnMic">Enable Microphone</button>
-          <div class="btn-row">
-            <button class="btn go" id="btnL" disabled>▶ Listen</button>
-            <button class="btn stp" id="btnS" disabled>■ Stop</button>
-            <button class="btn" id="btnC">↺ Clear</button>
+          <div class="ctrl">
+            <button class="btn go full" id="btnMic">Enable Microphone</button>
+            <div class="btn-row">
+              <button class="btn go" id="btnL" disabled>▶ Listen</button>
+              <button class="btn stp" id="btnS" disabled>■ Stop</button>
+              <button class="btn" id="btnC">↺ Clear</button>
+            </div>
+            <button class="btn exp full" id="btnExport">⬇ Export Chat</button>
           </div>
-          <button class="btn exp full" id="btnExport">⬇ Export Chat</button>
-        </div>
 
-        <div class="lang-zone">
-          <div class="lang-hd">
-            <span>SELECT LANGUAGE</span>
-            <span id="lActive" style="color:var(--teal)">English</span>
+          <div class="lang-zone">
+            <div class="lang-hd">
+              <span>SELECT LANGUAGE</span>
+              <span id="lActive" style="color:var(--teal)">English</span>
+            </div>
+            <div class="lang-grid" id="langGrid"></div>
           </div>
-          <div class="lang-grid" id="langGrid"></div>
+
+          <div class="live-zone">
+            <span class="live-lbl">LIVE</span>
+            <span id="liveTr">—</span>
+          </div>
+
+          <div class="dbg-zone">
+            <div class="dbg-lbl">STATUS</div>
+            <div class="dbg-val" id="dbg">Use Chrome. Click Enable Microphone to start.</div>
+          </div>
         </div>
 
-        <div class="live-zone">
-          <span class="live-lbl">LIVE</span>
-          <span id="liveTr">—</span>
-        </div>
-
-        <div class="dbg-zone">
-          <div class="dbg-lbl">STATUS</div>
-          <div class="dbg-val" id="dbg">Use Chrome. Click Enable Microphone to start.</div>
+        <!-- API Engine Settings Card -->
+        <div class="card api-panel">
+          <div class="api-hd">
+            <div class="api-title">AI Engine Settings</div>
+            <div class="api-badge" id="apiStatus">Rama Cloud</div>
+          </div>
+          <div class="api-row">
+            <input type="password" class="api-input" id="apiInput" placeholder="Enter custom Groq Key (gsk_...)"/>
+            <button class="api-save" id="btnSaveApi">Save</button>
+          </div>
+          <div class="api-note">
+            Saved securely in your browser. Get a key at <a href="https://console.groq.com" target="_blank" rel="noopener">console.groq.com</a>. Clear to restore Rama Cloud.
+          </div>
         </div>
       </div>
 

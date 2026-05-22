@@ -12,7 +12,8 @@ app = Flask(__name__, static_folder='src')
 CORS(app)
 
 # Groq Client
-client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+server_key = os.getenv("GROQ_API_KEY")
+client = Groq(api_key=server_key) if server_key else None
 
 @app.route('/')
 def index():
@@ -33,14 +34,17 @@ def chat():
     print(f"User Text: {user_text}")
     print(f"Language: {lang_name}")
     
-    # Check if API key is configured
-    key = os.getenv("GROQ_API_KEY")
+    # Check if API key is configured (Server Env or Custom Header)
+    custom_key = request.headers.get("X-Groq-API-Key")
+    key = custom_key or os.getenv("GROQ_API_KEY")
     if not key:
-        print("ERROR: GROQ_API_KEY NOT FOUND IN .ENV")
-        return jsonify({"error": "GROQ_API_KEY not configured on server"}), 500
+        print("ERROR: NO GROQ_API_KEY AVAILABLE")
+        return jsonify({"error": "GROQ_API_KEY not configured on server and no custom key provided."}), 400
 
     try:
-        print(f"Calling Groq API (Key starts with: {key[0:5]}...)")
+        print(f"Calling Groq API (Key source: {'Custom Header' if custom_key else 'Server Env'}, starts with: {key[0:5]}...)")
+        active_client = Groq(api_key=custom_key) if custom_key else client
+
         # System prompt with TRANSLATION instructions
         system_prompt = f"""You are Rama, a friendly Australia regional assistant for migrants and tourists. 
         You must respond in {lang_name} language ONLY.
@@ -63,7 +67,7 @@ def chat():
             messages.append(msg)
         messages.append({"role": "user", "content": user_text})
 
-        completion = client.chat.completions.create(
+        completion = active_client.chat.completions.create(
             model="llama-3.3-70b-versatile",
             messages=messages,
             temperature=0.7,

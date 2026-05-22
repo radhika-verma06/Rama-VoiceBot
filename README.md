@@ -2,15 +2,21 @@
 
 Rama is a high-performance, multilingual voice assistant designed specifically for migrants and tourists in Australia. It provides real-time information on transport, emergency services, local attractions, and more, using the Web Speech API and Groq's high-speed Llama 3 AI.
 
+![Rama VoiceBot Walkthrough](src/assets/demo.webp)
+
 ## 🚀 Live Demo
 
 **[👉 CLICK HERE TO TALK TO RAMA](https://rama-voice-bot.vercel.app)**
 
-### 🌟 Why Rama?
-- **Zero-Install**: Works directly in your browser (Google Chrome).
-- **No API Key Needed**: AI intelligence is handled securely on our servers.
-- **14 Supported Languages**: Including English, Mandarin, Arabic, Hindi, Spanish, and more.
-- **Real-time Translation**: Automatically detects and translates your speech.
+### 🌟 Core Features & Resilience Architecture
+
+*   **Robust Multi-Mode AI Engine**:
+    *   `🟢 Rama Cloud`: Uses server-side Groq keys securely proxying queries.
+    *   `🔵 Custom API Key`: Users can securely save their own free Groq API key in browser `localStorage` (passed via custom headers to prevent key exposure and CORS).
+    *   `🟡 Offline Fallback`: Dynamically falls back to a rule-based matching engine when cloud limits or rate limits are reached, showing a professional resilience model.
+*   **Zero-Install**: Works directly in Google Chrome via standard Web Speech API.
+*   **14 Supported Languages**: Including English, Mandarin, Arabic, Hindi, Spanish, Vietnamese, and more.
+*   **Real-time Translation**: Automatically detects, translates, and synthesizes non-English speech.
 
 ## 🏛️ Project Architecture
 

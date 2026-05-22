@@ -12,6 +12,10 @@ export async function getAIReply(text, context, langName, retries = 2) {
     : '/api/chat';
   
   const headers = { 'Content-Type': 'application/json' };
+  const customKey = localStorage.getItem('ramaCustomGroqKey');
+  if (customKey && customKey.trim()) {
+    headers['X-Groq-API-Key'] = customKey.trim();
+  }
   const body = JSON.stringify({ text, context, langName });
 
   for (let attempt = 0; attempt <= retries; attempt++) {

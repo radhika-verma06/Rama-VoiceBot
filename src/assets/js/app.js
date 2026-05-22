@@ -60,6 +60,30 @@ function init() {
     else startListening();
   };
 
+  // API Panel Setup
+  const apiInput = $('apiInput');
+  const btnSaveApi = $('btnSaveApi');
+  if (apiInput && btnSaveApi) {
+    const savedKey = localStorage.getItem('ramaCustomGroqKey');
+    if (savedKey) apiInput.value = savedKey;
+    
+    btnSaveApi.onclick = () => {
+      const val = apiInput.value.trim();
+      if (val) {
+        localStorage.setItem('ramaCustomGroqKey', val);
+        updateApiStatusBadge('custom');
+        debug('Custom API Key saved locally!');
+        setStatus('Key Saved', 'Custom Groq key will be used for AI requests.');
+      } else {
+        localStorage.removeItem('ramaCustomGroqKey');
+        updateApiStatusBadge('cloud');
+        debug('Custom API Key cleared.');
+        setStatus('Key Cleared', 'Restored default Rama Cloud connection.');
+      }
+    };
+  }
+  updateApiStatusBadge(localStorage.getItem('ramaCustomGroqKey') ? 'custom' : 'cloud');
+
   // Restore mic if already granted
   restoreMicIfAlreadyGranted();
   
@@ -152,7 +176,11 @@ async function handleInput(text) {
   const aiResult = await getAIReply(text, conversationHistory, curLang.name);
   hideTypingIndicator();
 
+  const customKey = localStorage.getItem('ramaCustomGroqKey');
+  const activeMode = customKey ? 'custom' : 'cloud';
+
   if (aiResult) {
+    updateApiStatusBadge(activeMode);
     reply = aiResult.reply;
     detectedLang = aiResult.detectedLang;
     translation = aiResult.translation;
@@ -167,11 +195,22 @@ async function handleInput(text) {
     conversationHistory.push({ role: 'assistant', content: reply });
   } else {
     // Fallback to rule-based
+    updateApiStatusBadge('offline');
     const langConfig = RESP[curLang.code] || RESP['en-US'];
     reply = langConfig.think(text);
+    
+    if (!window.ramaFallbackNotified) {
+      window.ramaFallbackNotified = true;
+      setTimeout(() => {
+        debug('Cloud rate-limited. Running in Offline Fallback Mode.');
+        setStatus('Offline Fallback Active', 'Cloud limits reached. Insert a Groq API Key in settings to restore full AI.');
+      }, 500);
+    }
   }
   
-  const modeLabel = aiResult ? 'Groq AI' : 'Rule-based (API Error)';
+  const modeLabel = aiResult 
+    ? (customKey ? 'Custom Groq AI' : 'Rama Cloud AI') 
+    : 'Offline Fallback';
   addChatMessage(reply, 'b', 'Rama · ' + getTimeString() + ' · ' + curLang.name + ' · ' + modeLabel, curLang.name);
   
   speech.speak(reply, curLang.code, () => {
@@ -236,6 +275,44 @@ function exportChat() {
   a.href = URL.createObjectURL(new Blob([txt], { type: 'text/plain' }));
   a.download = `Rama_chat_${new Date().toISOString().slice(0, 10)}.txt`;
   a.click();
+}
+
+function updateApiStatusBadge(mode) {
+  const badge = $('apiStatus');
+  const headerBadge = $('cModel');
+  if (!badge) return;
+  
+  if (mode === 'custom') {
+    badge.textContent = 'Custom Key';
+    badge.className = 'api-badge';
+    badge.style.borderColor = 'var(--teal)';
+    badge.style.color = 'var(--teal)';
+    badge.style.background = 'rgba(0, 232, 176, 0.07)';
+    if (headerBadge) {
+      headerBadge.textContent = 'CUSTOM KEY';
+      headerBadge.className = 'chip on';
+    }
+  } else if (mode === 'offline') {
+    badge.textContent = 'Offline Mode';
+    badge.className = 'api-badge err';
+    badge.removeAttribute('style');
+    if (headerBadge) {
+      headerBadge.textContent = 'OFFLINE';
+      headerBadge.className = 'chip';
+      headerBadge.style.borderColor = 'rgba(255, 95, 95, 0.5)';
+      headerBadge.style.background = 'rgba(255, 95, 95, 0.09)';
+      headerBadge.style.color = 'var(--red)';
+    }
+  } else {
+    badge.textContent = 'Rama Cloud';
+    badge.className = 'api-badge';
+    badge.removeAttribute('style');
+    if (headerBadge) {
+      headerBadge.textContent = 'RAMA CLOUD';
+      headerBadge.className = 'chip ai';
+      headerBadge.removeAttribute('style');
+    }
+  }
 }
 
 // Global initialization

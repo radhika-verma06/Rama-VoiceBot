@@ -148,6 +148,12 @@ body {
   align-items: start;
 }
 
+.sidebar-col {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
 @media (max-width: 780px) {
   .layout {
     grid-template-columns: 1fr;
