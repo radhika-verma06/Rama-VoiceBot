@@ -1,88 +1,221 @@
-# Rama — Multilingual Regional Voice Assistant for Australia🇦🇺🎙️
+<div align="center">
 
-Rama is a high-performance, multilingual voice assistant designed specifically for migrants and tourists in Australia. It provides real-time information on transport, emergency services, local attractions, and more, using the Web Speech API and Groq's high-speed Llama 3 AI.
+# 🎙️ Rama — Multilingual Regional Voice Assistant for Australia
 
-![Rama VoiceBot Walkthrough](src/assets/demo.webp)
+**An AI-powered voice assistant that speaks 14 languages, designed to help migrants and tourists navigate Australia in real time.**
 
-## 🚀 Live Demo
-
-**[👉 CLICK HERE TO TALK TO RAMA](https://rama-voice-bot.vercel.app)**
-
-### 🌟 Core Features & Resilience Architecture
-
-*   **Robust Multi-Mode AI Engine**:
-    *   `🟢 Rama Cloud`: Uses server-side Groq keys securely proxying queries.
-    *   `🔵 Custom API Key`: Users can securely save their own free Groq API key in browser `localStorage` (passed via custom headers to prevent key exposure and CORS).
-    *   `🟡 Offline Fallback`: Dynamically falls back to a rule-based matching engine when cloud limits or rate limits are reached, showing a professional resilience model.
-*   **Zero-Install**: Works directly in Google Chrome via standard Web Speech API.
-*   **14 Supported Languages**: Including English, Mandarin, Arabic, Hindi, Spanish, Vietnamese, and more.
-*   **Real-time Translation**: Automatically detects, translates, and synthesizes non-English speech.
-
-## 🏛️ Project Architecture
-
-This project follows a modern **Client-Server Architecture**:
-
-1.  **Frontend (Vanilla JS Modules)**: High-performance, modular ES6 code for Speech and UI logic.
-2.  **Backend (Python/Flask)**: A secure gateway to the Groq API, protecting credentials and managing AI context.
-3.  **API Layer (Groq)**: Uses the cutting-edge **Llama 3.3 70B** model for lightning-fast regional intelligence.
+[![Live Demo](https://img.shields.io/badge/LIVE_DEMO-Try_It_Now-00e8b0?style=for-the-badge&logo=vercel&logoColor=white)](https://rama-voice-bot.vercel.app)
+[![Python](https://img.shields.io/badge/Python-3.10+-3776ab?style=flat&logo=python&logoColor=white)](https://python.org)
+[![Flask](https://img.shields.io/badge/Flask-Web_Framework-000000?style=flat&logo=flask&logoColor=white)](https://flask.palletsprojects.com)
+[![Groq](https://img.shields.io/badge/Groq-Llama_3.3_70B-FF6B00?style=flat&logo=groq&logoColor=white)](https://groq.com)
+[![Vercel](https://img.shields.io/badge/Deployed_On-Vercel-000000?style=flat&logo=vercel&logoColor=white)](https://vercel.com)
+[![License](https://img.shields.io/badge/License-MIT-blue?style=flat)](LICENSE)
 
 ---
 
-## 🛠️ Developer Setup (Local Development)
+**Try saying:** *"Hi Rama, what's the emergency number?"* or *"Hi Rama, how do I get around Sydney?"*
 
-The following steps are only required if you wish to run Rama on your local machine or contribute to the project.
+*Works best in Google Chrome · No installation required · Zero data stored*
 
-### Prerequisites
-- Python 3.8+
-- A Groq API Key ([Get one here](https://console.groq.com))
+</div>
 
-### Local Installation
-1.  **Clone the repository**:
-    ```bash
-    git clone https://github.com/radhika-verma06/Rama-VoiceBot.git
-    cd Rama-VoiceBot
-    ```
-2.  **Install dependencies**:
-    ```bash
-    pip install -r requirements.txt
-    ```
-3.  **Configure Environment Variables**:
-    Create a `.env` file in the root directory:
-    ```env
-    GROQ_API_KEY=your_groq_api_key_here
-    ```
-4.  **Start the Server**:
-    ```bash
-    python app.py
-    ```
-5.  **Access the App**:
-    Open `http://localhost:5001` in **Google Chrome**.
+---
 
-### ☁️ Deployment (Vercel)
-This project is optimized for **Vercel Serverless Functions**. To deploy your own version:
-1. Run `vercel` in the root directory.
-2. Add `GROQ_API_KEY` to your Vercel environment variables.
-3. Run `vercel --prod`.
+## 🎯 What Is This?
+
+Rama is a **real-time multilingual voice assistant** built for Australia's diverse migrant and tourist community. It combines:
+
+- **AI-powered conversations** via Groq's Llama 3.3 70B model
+- **Real-time speech recognition** in 14 languages
+- **Automatic translation detection** — speak in Hindi, get a response in English (or vice versa)
+- **Zero-install design** — works directly in the browser
+
+> *"The first voice assistant built specifically for Australia's multicultural communities."*
+
+---
+
+## ✨ Key Features
+
+### 🧠 AI Engine with Triple Resilience
+```
+┌─────────────────────────────────────────────────────┐
+│  🟢 Rama Cloud     → Server-side Groq key (free)   │
+│  🔵 Custom API Key  → User's own key (localStorage) │
+│  🟡 Offline Mode    → Rule-based fallback engine    │
+└─────────────────────────────────────────────────────┘
+```
+If the cloud hits rate limits, Rama **automatically degrades gracefully** — no crashes, no errors, just smart fallback responses.
+
+### 🌏 14 Languages Supported
+| Language | Flag | Language | Flag |
+|----------|------|----------|------|
+| English | 🇦🇺 | Korean | 🇰🇷 |
+| Mandarin | 🇨🇳 | French | 🇫🇷 |
+| Arabic | 🇸🇦 | German | 🇩🇪 |
+| Hindi | 🇮🇳 | Portuguese | 🇧🇷 |
+| Vietnamese | 🇻🇳 | Japanese | 🇯🇵 |
+| Italian | 🇮🇹 | Greek | 🇬🇷 |
+| Spanish | 🇪🇸 | Filipino | 🇵🇭 |
+
+### 🔄 Real-Time Translation
+Speak in your native language → Rama detects it → translates → responds in your chosen language. All in one turn.
+
+### 🎤 Voice-First Design
+- Web Speech API for recognition
+- SpeechSynthesis for responses
+- Real-time waveform visualization
+- Wake word detection ("Hi Rama")
+
+---
+
+## 🏗️ Architecture
+
+```
+┌──────────────────────────────────────────────────────────┐
+│                     CLIENT (Browser)                      │
+│                                                           │
+│  ┌─────────┐  ┌──────────┐  ┌─────────┐  ┌───────────┐  │
+│  │ Speech  │  │    UI    │  │   API   │  │  Config   │  │
+│  │ Manager │  │ Renderer │  │ Client  │  │  & Langs  │  │
+│  └────┬────┘  └────┬─────┘  └────┬────┘  └───────────┘  │
+│       │            │             │                        │
+│       └────────────┴─────────────┘                        │
+│                    │ ES6 Modules                          │
+└────────────────────┼─────────────────────────────────────┘
+                     │ /api/chat (POST)
+┌────────────────────┼─────────────────────────────────────┐
+│                    ▼ SERVER (Vercel Serverless)            │
+│                                                           │
+│  ┌──────────────────────────────────────────────────┐    │
+│  │  Flask Backend (app.py)                          │    │
+│  │  • CORS handling                                 │    │
+│  │  • Custom header API key injection               │    │
+│  │  • Translation metadata parsing                  │    │
+│  └──────────────┬───────────────────────────────────┘    │
+│                  │                                        │
+│  ┌──────────────▼───────────────────────────────────┐    │
+│  │  Groq API (Llama 3.3 70B Versatile)             │    │
+│  │  • System prompt with translation instructions   │    │
+│  │  • Context-aware conversation history            │    │
+│  └──────────────────────────────────────────────────┘    │
+└──────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 🚀 How to Use
+
+### Live Demo
+1. **Open** [rama-voice-bot.vercel.app](https://rama-voice-bot.vercel.app) in **Google Chrome**
+2. **Click** "Enable Microphone"
+3. **Say** "Hi Rama" to wake up the assistant
+4. **Ask** anything about Australia — transport, food, emergencies, attractions
+5. **Switch languages** using the language grid
+
+### Try These Questions
+| Question | What Rama Does |
+|----------|----------------|
+| "Hi Rama, what's the emergency number?" | Returns 000 with context |
+| "How do I get around Sydney?" | Explains Opal card system |
+| "Where can I find good food?" | Suggests multicultural dining |
+| "What are the top attractions?" | Lists landmarks by city |
+| "Hi Rama, 我需要帮助" | Detects Mandarin, translates, responds |
+
+### Local Development
+```bash
+git clone https://github.com/radhika-verma06/Rama-VoiceBot.git
+cd Rama-VoiceBot
+pip install -r requirements.txt
+
+# Create .env file
+echo "GROQ_API_KEY=your_key_here" > .env
+
+# Start server
+python app.py
+
+# Open http://localhost:5001 in Chrome
+```
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology | Why |
+|-------|-----------|-----|
+| **AI Model** | Llama 3.3 70B (Groq) | Fastest inference, free tier available |
+| **Backend** | Python Flask | Lightweight, serverless-friendly |
+| **Frontend** | Vanilla JS (ES6 Modules) | Zero dependencies, fast load |
+| **Speech** | Web Speech API | Native browser, no plugins |
+| **Hosting** | Vercel | Free, instant deploys, edge functions |
+| **Auth** | Custom header injection | Secure API key handling without exposure |
 
 ---
 
 ## 📂 Project Structure
-```text
-.
-├── app.py              # Flask Backend & AI Proxy
-├── requirements.txt     # Python Dependencies
-├── vercel.json         # Serverless Configuration
-├── src/                # Frontend Source
-│   ├── index.html      # Main Entry Point
-│   └── assets/
-│       ├── css/        # Styling modules
-│       └── js/         # Modular Logic (UI, Speech, API)
-└── legacy/             # Original prototype backup
+
+```
+Rama-VoiceBot/
+├── app.py                  # Flask backend & Groq API proxy
+├── requirements.txt        # Python dependencies
+├── vercel.json             # Serverless deployment config
+├── .env.example            # Environment template
+└── src/
+    ├── index.html          # Main entry point
+    └── assets/
+        ├── css/
+        │   └── styles.css  # Full styling (responsive)
+        └── js/
+            ├── app.js      # Main controller & wake word logic
+            ├── api.js      # Backend API communication
+            ├── config.js   # Language configs & fallback responses
+            ├── speech.js   # Web Speech API wrapper
+            └── ui.js       # DOM manipulation & waveform
 ```
 
-## 🛡️ License
-Distributed under the MIT License.
+---
 
-## 🤝 Contact
-[Radhika Verma](https://github.com/radhika-verma06)
-Project Link: [https://github.com/radhika-verma06/Rama-VoiceBot](https://github.com/radhika-verma06/Rama-VoiceBot)
+## 🧠 Engineering Decisions
+
+### Why Vanilla JS over React?
+For a voice-first app, **bundle size matters**. Vanilla JS loads instantly — no framework overhead. The modular ES6 structure gives the same code organization benefits.
+
+### Why Groq over OpenAI?
+Groq offers **free API access** with Llama 3.3 70B — a 70B parameter model running at near-instant speeds. Perfect for real-time voice conversations where latency kills the experience.
+
+### Why Flask over FastAPI?
+Flask's simplicity meant faster iteration on the serverless proxy layer. The backend is thin by design — just API key injection and response parsing.
+
+### Why the Triple Fallback?
+Real-world reliability matters. If Groq's free tier hits rate limits, the app doesn't break — it degrades gracefully to offline responses. This is the kind of resilience pattern that production systems need.
+
+---
+
+## 📊 What I Built (Impact)
+
+- **14 languages** with real-time translation detection
+- **Zero-cost operation** using Groq's free tier + Vercel free hosting
+- **Sub-second response times** via Groq's optimized inference
+- **Privacy-first** — no user data stored, API keys stay in browser localStorage
+- **Resilience architecture** — works even when cloud APIs are unavailable
+
+---
+
+## 📜 License
+
+MIT License — use it, learn from it, build on it.
+
+---
+
+## 👤 Built By
+
+**[Radhika Verma](https://github.com/radhika-verma06)** — AI/ML Engineer
+
+*Built to solve a real problem: helping Australia's multicultural communities access information in their own language.*
+
+---
+
+<div align="center">
+
+**[→ Try Rama Live](https://rama-voice-bot.vercel.app)** · **[View Source](https://github.com/radhika-verma06/Rama-VoiceBot)**
+
+</div>
